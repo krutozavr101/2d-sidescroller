@@ -5,21 +5,18 @@ using UnityEngine;
 public class Camera_script : MonoBehaviour
 {
     Background_generation generator;
+    Rigidbody2D rb;
+    int speed = 10;
     void Start()
     {
         generator = GetComponent<Background_generation>();
+        rb = GetComponent<Rigidbody2D>();
+        rb.velocity = -transform.up * speed;
     }
 
     void Update()
     {
         
     }
-    /// <summary>
-    /// Cleans level behind screen
-    /// </summary>
-    /// <param name="cleaner"></param>
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        generator.ReplaceCloud(collision.gameObject);
-    }
+
 }
