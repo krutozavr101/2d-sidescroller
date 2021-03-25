@@ -9,6 +9,7 @@ public class Player_movement : MonoBehaviour
     bool invulnerable = false;
     GameObject barrier;
     GameObject camera;
+    bool inMiddle = true;
 
     void Start()
     {
@@ -24,31 +25,50 @@ public class Player_movement : MonoBehaviour
     {
         float horizontControls = Input.GetAxis("Horizontal");
         rb.velocity += new Vector2(horizontControls * .7f, 0);
-        if((rb.velocity.y <= cameraRb.velocity.y) && (gameObject.transform.position.y <= camera.transform.position.y))
+        VelocityControl();
+        print(inMiddle);
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "middle_zone")
         {
+            inMiddle = true;
+        }
+        if (!invulnerable)
+        {
+            if (collision.tag == "middle_zone")
+            {
+                rb.velocity = new Vector2(rb.velocity.x, cameraRb.velocity.y);
+            }
+        }
+        
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "middle_zone")
+        {
+            inMiddle = false;
+        }
+    }
 
-            rb.velocity = new Vector2(rb.velocity.x, cameraRb.velocity.y);
+    void VelocityControl()
+    {
+        if((!invulnerable) && (!inMiddle))
+        {
+            if((gameObject.transform.position.y < camera.transform.position.y))
+            {
+                print("slow");
+                rb.velocity = new Vector2(rb.velocity.x, cameraRb.velocity.y + 2);
+            }
+            else if((gameObject.transform.position.y > camera.transform.position.y))
+            {
+                print("boost");
+                rb.velocity = new Vector2(rb.velocity.x, cameraRb.velocity.y - 3);
+            }
 
         }
-
-
+        
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-
-    }
-
-    public void SlowDown(int impulseVal)
-    {
-        if(!invulnerable)
-        {
-            StartCoroutine(Invulnerable());
-            rb.AddForce(Vector2.up * impulseVal, ForceMode2D.Impulse);
-            
-
-        }
-    }
-
     IEnumerator Invulnerable()
     {
         invulnerable = true;
@@ -56,10 +76,29 @@ public class Player_movement : MonoBehaviour
         yield return new WaitForSeconds(1);
         barrier.SetActive(false);
         invulnerable = false;
-        if(rb.velocity.y > cameraRb.velocity.y)
+        
+    }
+    public void SlowDown(int impulseVal)
+    {
+        if(!invulnerable)
         {
-            rb.velocity = new Vector2(rb.velocity.x, cameraRb.velocity.y - 3);
+            StartCoroutine(Invulnerable());
+            rb.AddForce(Vector2.up * impulseVal, ForceMode2D.Impulse);
 
         }
+    }
+
+    public void SpeedBoost(int impulseVal)
+    {
+        if (!invulnerable)
+        {
+            StartCoroutine(Invulnerable());
+            rb.AddForce(-Vector2.up * impulseVal, ForceMode2D.Impulse);
+
+        }
+    }
+    public void Die()
+    {
+        gameObject.SetActive(false);
     }
 }

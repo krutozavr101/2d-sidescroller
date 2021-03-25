@@ -8,6 +8,9 @@ TagManager:
   - cloud
   - enemy
   - cleaner
+  - middle_zone
+  - bonus
+  - coin
   layers:
   - Default
   - TransparentFX

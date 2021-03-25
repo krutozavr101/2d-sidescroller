@@ -6,17 +6,14 @@ public class Background_generation : MonoBehaviour
 {
     [SerializeField]
     private List<GameObject> cloudAssets;
-     List<GameObject> clouds = new List<GameObject>();
+    List<GameObject> clouds = new List<GameObject>();
 
     void Start()
     {
         GenerateClouds();
     }
 
-    void FixedUpdate()
-    {
-       
-    }
+
     void GenerateClouds()
     {
 

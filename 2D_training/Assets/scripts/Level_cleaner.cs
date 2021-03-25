@@ -5,11 +5,11 @@ using UnityEngine;
 public class Level_cleaner : MonoBehaviour
 {
     Background_generation generator;
-    Enemy_spawner spawner;
+
     void Start()
     {
         generator = FindObjectOfType<Background_generation>();
-        spawner = FindObjectOfType<Enemy_spawner>();
+
         
     }
 
@@ -26,10 +26,20 @@ public class Level_cleaner : MonoBehaviour
             generator.ReplaceCloud(collision.gameObject);
 
         }
+        else if(collision.tag == "coin")
+        {
+            Money_spawner.curQuantity--;
+        }
         else if (collision.tag == "enemy")
         {
             Destroy(collision.gameObject);
-            spawner.curQuantity -= 1;
+            Enemy_spawner.curQuantity--;
         }
+        else if (collision.tag == "bonus")
+        {
+            Destroy(collision.gameObject);
+            Bonus_spawner.curQuantity--;
+        }
+
     }
 }

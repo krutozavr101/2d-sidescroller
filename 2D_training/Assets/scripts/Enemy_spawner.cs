@@ -9,7 +9,7 @@ public class Enemy_spawner : MonoBehaviour
     [SerializeField]
     private int availableQuantity;
     [HideInInspector]
-    public int curQuantity = 0;
+    public static int curQuantity = 0;
     void Start()
     {
         
@@ -27,7 +27,7 @@ public class Enemy_spawner : MonoBehaviour
         curQuantity++;
 
         yield return new WaitForSeconds(Random.Range(0f, 3f));
-        Vector3 pos = new Vector3(Random.Range(-12, 12), transform.position.y - Random.Range(40, 55), 0);
+        Vector3 pos = new Vector3(Random.Range(-15, 15), transform.position.y - Random.Range(40, 55), 0);
         SpawnBat(pos);
     }
     void SpawnBat(Vector3 pos)
