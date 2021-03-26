@@ -9,11 +9,12 @@ public class Flying_enemy : MonoBehaviour
     [SerializeField]
     bool facingRight = true;
     int speed = 15;
+    Enemy_spawner spawner;
     void Start()
     {
         player = GameObject.Find("player");
         rb = GetComponent<Rigidbody2D>();
-
+        spawner = FindObjectOfType<Enemy_spawner>();
     }
 
     void Update()
@@ -33,7 +34,7 @@ public class Flying_enemy : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            player.GetComponent<Player_movement>().SlowDown(7);
+            player.GetComponent<Player_movement>().SlowDown(10);
         }
         else  if (collision.gameObject.GetComponentInChildren<BoxCollider2D>() != null)
         {
@@ -54,5 +55,8 @@ public class Flying_enemy : MonoBehaviour
         
     }
 
-    
+    private void OnDestroy()
+    {
+        spawner.curQuantity--;
+    }
 }

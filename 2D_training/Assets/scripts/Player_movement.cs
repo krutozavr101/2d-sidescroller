@@ -26,7 +26,6 @@ public class Player_movement : MonoBehaviour
         float horizontControls = Input.GetAxis("Horizontal");
         rb.velocity += new Vector2(horizontControls * .7f, 0);
         VelocityControl();
-        print(inMiddle);
     }
     private void OnTriggerStay2D(Collider2D collision)
     {

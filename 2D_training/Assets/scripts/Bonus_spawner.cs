@@ -2,37 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bonus_spawner : MonoBehaviour
+public class Bonus_spawner : Spawner
 {
 
     [SerializeField]
-    private GameObject cloudPrefab;
+    GameObject cloudPrefab;
     [SerializeField]
     private int availableQuantity;
-    [HideInInspector]
-    public static   int curQuantity = 0;
-    void Start()
+    private void Start()
     {
-        
+        delList.Add(delegate { SpawnCloud(); });
     }
 
     void FixedUpdate()
     {
         if (curQuantity < availableQuantity)
         {
-            StartCoroutine(SpawnRandomBonus());
+            StartCoroutine(SpawnRandomObject(Random.Range(0, delList.Count)));
         }
     }
-    IEnumerator SpawnRandomBonus()
-    {
-        curQuantity++;
 
-        yield return new WaitForSeconds(Random.Range(0f, 3f));
-        Vector3 pos = new Vector3(Random.Range(-15, 15), transform.position.y - Random.Range(40, 55), 0);
-        SpawnCloud(pos);
-    }
-    void SpawnCloud(Vector3 pos)
+    void SpawnCloud()
     {
+        Vector3 pos = new Vector3(Random.Range(-15, 15), transform.position.y - Random.Range(40, 55), 0);
+
         GameObject bat = Instantiate(cloudPrefab, pos, Quaternion.identity);
         
 

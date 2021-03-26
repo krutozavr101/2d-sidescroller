@@ -26,20 +26,9 @@ public class Level_cleaner : MonoBehaviour
             generator.ReplaceCloud(collision.gameObject);
 
         }
-        else if(collision.tag == "coin")
-        {
-            Money_spawner.curQuantity--;
-        }
-        else if (collision.tag == "enemy")
+        else
         {
             Destroy(collision.gameObject);
-            Enemy_spawner.curQuantity--;
         }
-        else if (collision.tag == "bonus")
-        {
-            Destroy(collision.gameObject);
-            Bonus_spawner.curQuantity--;
-        }
-
     }
 }
