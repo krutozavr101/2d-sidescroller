@@ -6,21 +6,18 @@ public class Background_generation : MonoBehaviour
 {
     [SerializeField]
     private List<GameObject> cloudAssets;
-     List<GameObject> clouds = new List<GameObject>();
+    List<GameObject> clouds = new List<GameObject>();
 
     void Start()
     {
         GenerateClouds();
     }
 
-    void FixedUpdate()
-    {
-       
-    }
+
     void GenerateClouds()
     {
 
-        for (int i = 0; i <= 35; i++)
+        for (int i = 0; i <= 20; i++)
         {
             GameObject cloud = Instantiate(cloudAssets[Random.Range(0, cloudAssets.Count)], new Vector3(Random.Range(-13, 13), transform.position.y - Random.Range(35,70), 0), Quaternion.identity);
 

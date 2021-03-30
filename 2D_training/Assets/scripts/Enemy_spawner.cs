@@ -2,41 +2,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_spawner : MonoBehaviour
+public class Enemy_spawner : Spawner
 {
     [SerializeField]
-    GameObject batPrefab;
+    GameObject batPrefab, projectilePrefab;
     [SerializeField]
     private int availableQuantity;
-    [HideInInspector]
-    public int curQuantity = 0;
-    void Start()
+    private void Start()
     {
-        
+        delList.Add(delegate { SpawnBat(); });
+        delList.Add(delegate { SpawnProjectile(); });
+
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if(curQuantity < availableQuantity)
         {
-            StartCoroutine(SpawnRandomEnemy());
+            StartCoroutine(SpawnRandomObject( Random.Range(0, delList.Count)));
         }
     }
-    IEnumerator SpawnRandomEnemy()
+    
+    void SpawnBat()
     {
-        curQuantity++;
+        Vector3 pos = new Vector3(Random.Range(-14, 15), transform.position.y - Random.Range(40, 55), 0);
 
-        yield return new WaitForSeconds(Random.Range(0f, 3f));
-        Vector3 pos = new Vector3(Random.Range(-12, 12), transform.position.y - Random.Range(40, 55), 0);
-        SpawnBat(pos);
-    }
-    void SpawnBat(Vector3 pos)
-    {
         GameObject bat = Instantiate(batPrefab, pos, Quaternion.identity);
-       if(Random.value > .5)
-       {
-        bat.GetComponent<Flying_enemy>().Flip();
-       }
         
+        if(Random.value > .5)
+        {
+            bat.GetComponent<Flying_enemy>().Flip();
+        }
+        StartCoroutine( EmergencyDestroy(bat));
     }
+    void SpawnProjectile()
+    {
+        Vector3 pos = new Vector3(Random.Range(-14, 15), transform.position.y - Random.Range(40, 55), 0);
+
+        GameObject projectile = Instantiate(projectilePrefab, pos, Quaternion.identity);
+
+        
+        StartCoroutine(EmergencyDestroy(projectile));
+    }
+
+
 }
