@@ -11,6 +11,8 @@ TagManager:
   - middle_zone
   - bonus
   - coin
+  - friendly_bullet
+  - wall
   layers:
   - Default
   - TransparentFX

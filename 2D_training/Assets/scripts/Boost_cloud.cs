@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boost_cloud : MonoBehaviour
+public class Boost_cloud : Entities
 {
 
     Bonus_spawner spawner;
@@ -23,4 +23,5 @@ public class Boost_cloud : MonoBehaviour
     {
         spawner.curQuantity--;
     }
+
 }

@@ -5,12 +5,14 @@ using UnityEngine;
 public class Enemy_spawner : Spawner
 {
     [SerializeField]
-    GameObject batPrefab;
+    GameObject batPrefab, projectilePrefab;
     [SerializeField]
     private int availableQuantity;
     private void Start()
     {
         delList.Add(delegate { SpawnBat(); });
+        delList.Add(delegate { SpawnProjectile(); });
+
     }
 
     void FixedUpdate()
@@ -21,9 +23,9 @@ public class Enemy_spawner : Spawner
         }
     }
     
-    void  SpawnBat()
+    void SpawnBat()
     {
-        Vector3 pos = new Vector3(Random.Range(-15, 15), transform.position.y - Random.Range(40, 55), 0);
+        Vector3 pos = new Vector3(Random.Range(-14, 15), transform.position.y - Random.Range(40, 55), 0);
 
         GameObject bat = Instantiate(batPrefab, pos, Quaternion.identity);
         
@@ -33,6 +35,15 @@ public class Enemy_spawner : Spawner
         }
         StartCoroutine( EmergencyDestroy(bat));
     }
+    void SpawnProjectile()
+    {
+        Vector3 pos = new Vector3(Random.Range(-14, 15), transform.position.y - Random.Range(40, 55), 0);
 
-    
+        GameObject projectile = Instantiate(projectilePrefab, pos, Quaternion.identity);
+
+        
+        StartCoroutine(EmergencyDestroy(projectile));
+    }
+
+
 }

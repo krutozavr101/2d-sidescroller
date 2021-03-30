@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Flying_enemy : MonoBehaviour
+public class Flying_enemy : Entities
 {
     GameObject player;
     Rigidbody2D rb;
