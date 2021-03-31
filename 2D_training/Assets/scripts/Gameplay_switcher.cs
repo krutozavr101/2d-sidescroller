@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class Gameplay_switcher : MonoBehaviour
 {
 
@@ -10,25 +10,34 @@ public class Gameplay_switcher : MonoBehaviour
     [SerializeField]
     GameObject minigame, basegame;
 
-    void Start()
+    void Awake()
     {
         player = GameObject.Find("player");
         playerRb = player.GetComponent<Rigidbody2D>();
-        InvokeRepeating("ChangeGamePlay", 0, 10);
+        InvokeRepeating("ChangeGamePlay", 20, 20);
+        GetComponent<Camera_script>().enabled = true;
     }
 
     void Update()
     {
-        
+        if (SceneManager.GetActiveScene().name == "Main")
+        {
+            if(player != null)
+            {
+
+            player.SetActive(true);
+            }
+        }
+
     }
 
     void ChangeGamePlay()
     {
-        Entities obj = FindObjectOfType<Entities>();
-        while (obj != null)
+
+        foreach(Entities obj in FindObjectsOfType<Entities>())
         {
+
             obj.Die();
-            obj = FindObjectOfType<Entities>();
         }
         player.GetComponent<Player_movement>().isInMiniGame = !player.GetComponent<Player_movement>().isInMiniGame ;
         if(player.GetComponent<Player_movement>().isInMiniGame)

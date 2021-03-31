@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player_movement : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class Player_movement : MonoBehaviour
     GameObject camera;
     bool inMiddle = true;
     [HideInInspector]
-    public bool isInMiniGame = false;
+    public bool isInMiniGame = true;
     bool canControl = true;
 
     void Start()
@@ -22,6 +23,7 @@ public class Player_movement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         barrier = transform.GetChild(0).gameObject;
         rb.velocity = -transform.up * speed;
+        gameObject.SetActive(false);
 
     }
 
@@ -132,7 +134,8 @@ public class Player_movement : MonoBehaviour
     }
     public void Die()
     {
-        gameObject.SetActive(false);
+        SceneManager.LoadScene(0, LoadSceneMode.Additive);
+        Destroy(gameObject);
     }
     
     IEnumerator CantControl()

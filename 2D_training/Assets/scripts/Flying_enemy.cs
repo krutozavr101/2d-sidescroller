@@ -57,6 +57,7 @@ public class Flying_enemy : Entities
 
     private void OnDestroy()
     {
+
         spawner.curQuantity--;
     }
 }

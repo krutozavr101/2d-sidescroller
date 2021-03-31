@@ -31,14 +31,18 @@ public class LockRoom_spawner : MonoBehaviour
     {
         for (int i = 0;i < quantity; i++)
         {
-            print(spawner.prevWallPos);
-            GameObject key = Instantiate(keyPrefab, new Vector3(Random.Range(-13, 13), Random.Range(spawner.prevWallPos.y, gameObject.transform.position.y)), Quaternion.identity);
+
+            GameObject key = Instantiate(keyPrefab, new Vector3(Random.Range(-13, 13), Random.Range(spawner.prevWallPos.y - 3, gameObject.transform.position.y + 3)), Quaternion.identity);
             
         }
         spawner.prevWallPos = gameObject.transform.position;
     }
     private void OnDisable()
     {
+        if(FindObjectOfType<Wall_spawner>() != null)
+        {
+
         FindObjectOfType<Wall_spawner>().curQuantity--;
+        }
     }
 }

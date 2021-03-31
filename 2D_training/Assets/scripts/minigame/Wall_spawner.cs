@@ -14,7 +14,6 @@ public class Wall_spawner : Spawner
     private void Start()
     {
         curQuantity = 0;
-        camera = GameObject.Find("MainCamera");
     }
     private void FixedUpdate()
     {
@@ -26,7 +25,7 @@ public class Wall_spawner : Spawner
     void SpawnWall()
     {
         curQuantity++;
-        Vector3 pos = new Vector3(0, camera.transform.position.y - 40, 0);
+        Vector3 pos = new Vector3(0, prevWallPos.y - 40, 0);
         GameObject wall = Instantiate(wallPrefab, pos, Quaternion.identity);
         GameObject brick =  wall.gameObject.transform.GetChild(Random.Range(0, wall.gameObject.transform.childCount)).gameObject;
         if (spawnLockRoom)
@@ -45,6 +44,9 @@ public class Wall_spawner : Spawner
     }
     private void OnEnable()
     {
+        camera = GameObject.Find("MainCamera");
+
         spawnLockRoom = false;
+        prevWallPos = camera.transform.position;
     }
 }

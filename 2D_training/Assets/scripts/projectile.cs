@@ -21,6 +21,7 @@ public class projectile : Entities
     }
     private void OnDestroy()
     {
+
         spawner.curQuantity--;
     }
 }

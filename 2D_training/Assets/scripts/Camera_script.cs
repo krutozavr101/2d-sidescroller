@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Camera_script : MonoBehaviour
@@ -16,6 +15,7 @@ public class Camera_script : MonoBehaviour
 
     void Update()
     {
+         
         
     }
 

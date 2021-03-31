@@ -11,7 +11,7 @@ public class Spawner : MonoBehaviour
 
     protected IEnumerator EmergencyDestroy(GameObject obj)
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(8);
         if (obj != null)
         {
             Destroy(obj);

@@ -6,13 +6,15 @@ public class Money_spawner : Spawner
 {
 
     [SerializeField]
-    private GameObject greenCoinPrefab;
+    private GameObject greenCoinPrefab, redCoinPrefab;
     [SerializeField]
     private int availableQuantity;
 
     private void Start()
     {
         delList.Add(delegate { SpawnGreenCoin(); });
+        delList.Add(delegate { SpawnRedCoin(); });
+
     }
 
     void FixedUpdate()
@@ -30,5 +32,11 @@ public class Money_spawner : Spawner
         GameObject bat = Instantiate(greenCoinPrefab, pos, Quaternion.identity);
 
 
+    }
+    void SpawnRedCoin()
+    {
+        Vector3 pos = new Vector3(Random.Range(-15, 15), transform.position.y - Random.Range(40, 55), 0);
+
+        GameObject bat = Instantiate(redCoinPrefab, pos, Quaternion.identity);
     }
 }
