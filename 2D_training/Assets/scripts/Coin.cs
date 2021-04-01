@@ -7,9 +7,11 @@ public class Coin : MonoBehaviour
     Money_spawner spawner;
     [SerializeField]
     int value;
+    Count moneyCnt;
     private void Start()
     {
         spawner = FindObjectOfType<Money_spawner>();
+        moneyCnt = FindObjectOfType<Count>();
     }
     protected void OnTriggerEnter2D(Collider2D collision)
     {
@@ -18,13 +20,13 @@ public class Coin : MonoBehaviour
             if(value == 50)
             {
                 StartCoroutine(HideCoin());
-                Money_cnt.ChangeValue(value);
+                moneyCnt.ChangeValue(value);
 
             }
             else
             {
 
-            Money_cnt.ChangeValue(value);
+            moneyCnt.ChangeValue(value);
             Destroy(gameObject);
             }
         }

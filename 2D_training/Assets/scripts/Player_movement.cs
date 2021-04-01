@@ -134,6 +134,7 @@ public class Player_movement : MonoBehaviour
     }
     public void Die()
     {
+        FindObjectOfType<Save_Load_system>().Save();
         SceneManager.LoadScene(0, LoadSceneMode.Additive);
         Destroy(gameObject);
     }

@@ -331,6 +331,7 @@ GameObject:
   - component: {fileID: 222579643}
   - component: {fileID: 222579645}
   - component: {fileID: 222579644}
+  - component: {fileID: 222579647}
   - component: {fileID: 222579646}
   m_Layer: 5
   m_Name: cnt
@@ -468,6 +469,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca67c546483089b4794c7429859911be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  value: 0
+--- !u!114 &222579647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222579642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f87e931126a4e644e96eafd0d0e46c70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveType: value
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,6 +499,7 @@ GameObject:
   - component: {fileID: 519420037}
   - component: {fileID: 519420033}
   - component: {fileID: 519420035}
+  - component: {fileID: 519420036}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -596,7 +612,7 @@ MonoBehaviour:
     type: 3}
   redCoinPrefab: {fileID: 384535302230830826, guid: 9efd708dbd7d8544ead9960479bea9c2,
     type: 3}
-  availableQuantity: 20
+  availableQuantity: 30
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -623,6 +639,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigame: {fileID: 1988481035}
   basegame: {fileID: 187794007}
+--- !u!114 &519420036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6e29ae04193a0f4daee3dfaff89aabf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objects: []
 --- !u!50 &519420037
 Rigidbody2D:
   serializedVersion: 4
@@ -860,8 +889,8 @@ RectTransform:
   - {fileID: 1116247478}
   - {fileID: 1013199733}
   - {fileID: 1704296886}
-  m_Father: {fileID: 1204692926}
-  m_RootOrder: 1
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1294,7 +1323,6 @@ Transform:
   m_LocalScale: {x: 9.416792, y: 10.062441, z: 1}
   m_Children:
   - {fileID: 1333835892}
-  - {fileID: 824673227}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
