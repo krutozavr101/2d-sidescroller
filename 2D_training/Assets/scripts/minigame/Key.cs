@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Key : MonoBehaviour
+public class Key : Entities
 {
     LockRoom_spawner lockDoor;
     void Start()

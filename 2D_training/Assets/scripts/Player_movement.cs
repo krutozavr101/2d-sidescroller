@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player_movement : MonoBehaviour
 {
@@ -8,12 +9,17 @@ public class Player_movement : MonoBehaviour
     Rigidbody2D rb, cameraRb;
     int speed = 10;
     bool invulnerable = false;
-    GameObject barrier;
+    GameObject barrier, redBarrier;
     GameObject camera;
     bool inMiddle = true;
     [HideInInspector]
-    public bool isInMiniGame = false;
+    public bool isInMiniGame = true;
     bool canControl = true;
+    GameObject coinCnt;
+    float horSpeed = .7f;
+    float additionalVertSpeed;
+    float resistToImpulse = 1;
+    Vector3 baseScale;
 
     void Start()
     {
@@ -21,18 +27,26 @@ public class Player_movement : MonoBehaviour
         cameraRb = camera.GetComponent<Rigidbody2D>();
         rb = GetComponent<Rigidbody2D>();
         barrier = transform.GetChild(0).gameObject;
+        redBarrier = transform.GetChild(1).gameObject;
         rb.velocity = -transform.up * speed;
+        gameObject.SetActive(false);
+        coinCnt = GameObject.Find("final_results");
+        baseScale = transform.localScale;
 
     }
 
     void FixedUpdate()
     {
+        if(Input.GetKeyDown("k"))
+        {
+            Die();
+        }
         if (!isInMiniGame)
         {
             GetComponent<ShootBullets>().enabled = false;
 
             float horizontControls = Input.GetAxis("Horizontal");
-            rb.velocity += new Vector2(horizontControls * .7f, 0);
+            rb.velocity += new Vector2(horizontControls * horSpeed, 0);
             VelocityControl();
         }
         else
@@ -52,7 +66,7 @@ public class Player_movement : MonoBehaviour
             if(((vertControls != 0) || (horControls != 0)) && (canControl))
             {
 
-                rb.velocity = new Vector2(horControls * 20, vertControls * vertSpeed);
+                rb.velocity = new Vector2(horControls * 34, vertControls * vertSpeed);
             }
         }
     }
@@ -86,11 +100,11 @@ public class Player_movement : MonoBehaviour
             if ((gameObject.transform.position.y < camera.transform.position.y))
             {
 
-                rb.velocity = new Vector2(rb.velocity.x, cameraRb.velocity.y + 2);
+                rb.velocity = new Vector2(rb.velocity.x, cameraRb.velocity.y + 2 - additionalVertSpeed);
             }
             else if ((gameObject.transform.position.y > camera.transform.position.y))
             {
-                rb.velocity = new Vector2(rb.velocity.x, cameraRb.velocity.y - 2);
+                rb.velocity = new Vector2(rb.velocity.x, cameraRb.velocity.y - 2 - additionalVertSpeed);
             }
 
         }
@@ -110,7 +124,7 @@ public class Player_movement : MonoBehaviour
         if (!invulnerable)
         {
             StartCoroutine(Invulnerable());
-            rb.AddForce(Vector2.up * impulseVal, ForceMode2D.Impulse);
+            rb.AddForce(Vector2.up * impulseVal * resistToImpulse, ForceMode2D.Impulse);
 
         }
     }
@@ -118,7 +132,6 @@ public class Player_movement : MonoBehaviour
     {
         StartCoroutine(CantControl());
         rb.velocity = dir * impulseVal;
-       // rb.AddForce(dir * impulseVal, ForceMode2D.Impulse);
     }
 
     public void SpeedBoost(int impulseVal)
@@ -126,13 +139,16 @@ public class Player_movement : MonoBehaviour
         if (!invulnerable)
         {
             StartCoroutine(Invulnerable());
-            rb.AddForce(-Vector2.up * impulseVal, ForceMode2D.Impulse);
+            rb.AddForce(-Vector2.up * impulseVal * resistToImpulse, ForceMode2D.Impulse);
 
         }
     }
     public void Die()
     {
-        gameObject.SetActive(false);
+        coinCnt.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
+        coinCnt.transform.GetChild(0).gameObject.SetActive(true);
+        SceneManager.LoadScene(0, LoadSceneMode.Additive);
+        Destroy(gameObject);
     }
     
     IEnumerator CantControl()
@@ -140,5 +156,66 @@ public class Player_movement : MonoBehaviour
         canControl = false;
         yield return new WaitForSeconds(.5f);
         canControl = true;
+    }
+
+    public void Boost()
+    {
+        StartCoroutine(MovementBoost(8f));
+    }
+
+
+    IEnumerator MovementBoost(float time)
+    {
+        redBarrier.SetActive(true);
+        additionalVertSpeed += 1.2f;
+        horSpeed += .3f;
+        yield return new WaitForSeconds(time);
+
+        additionalVertSpeed -= 1.2f;
+        horSpeed -= .3f;
+        redBarrier.SetActive(false);
+
+    }
+
+    public void BecomeBeeg()
+    {
+        BecomeNormal();
+        StartCoroutine(Beeg());
+
+    }
+    public void BecomeSmall()
+    {
+        BecomeNormal();
+        StartCoroutine(Small());
+    }
+
+    IEnumerator Beeg()
+    {
+        resistToImpulse = .45f;
+        horSpeed -= .4f;
+        transform.localScale = transform.localScale * 2.5f;
+        yield return new WaitForSeconds(10);
+        BecomeNormal();
+
+    }
+    IEnumerator Small()
+    {
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        resistToImpulse = 1.4f;
+        horSpeed += .4f;
+        transform.localScale = transform.localScale / 1.5f;
+        yield return new WaitForSeconds(10);
+        BecomeNormal();
+        
+    }
+
+    public void BecomeNormal()
+    {
+        StopCoroutine(Beeg());
+        StopCoroutine(Small());
+        resistToImpulse = 1;
+        horSpeed = .7f;
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
+        transform.localScale = baseScale;
     }
 }

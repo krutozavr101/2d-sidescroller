@@ -17,7 +17,7 @@ public class Entities : MonoBehaviour
  
     public  void Die()
     {
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 
     

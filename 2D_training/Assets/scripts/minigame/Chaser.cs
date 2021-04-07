@@ -55,25 +55,13 @@ public class Chaser : Entities
 
 
             player.GetComponent<Player_movement>().KnockBack((Vector2)((player.transform.position - transform.position).normalized), 15);
-            StartCoroutine(Cooldown());
+            Die();
         }
         else if(collision.tag == "friendly_bullet")
         {
             hp -= 33;
         }
     }
-    IEnumerator Cooldown()
-    {
-        rb.constraints = RigidbodyConstraints2D.FreezePosition;
-        yield return new WaitForSeconds(1);
-        rb.constraints &= ~RigidbodyConstraints2D.FreezePosition;
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-    }
 
-    void Die()
-    {
-
-        gameObject.SetActive(false);
-    }
 }

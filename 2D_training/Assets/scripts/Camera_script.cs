@@ -1,11 +1,11 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Camera_script : MonoBehaviour
 {
     Background_generation generator;
-    Rigidbody2D rb;
+    [HideInInspector]
+    public Rigidbody2D rb;
     int speed = 10;
     void Start()
     {
@@ -16,6 +16,7 @@ public class Camera_script : MonoBehaviour
 
     void Update()
     {
+         
         
     }
 

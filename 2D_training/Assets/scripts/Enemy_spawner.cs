@@ -25,7 +25,7 @@ public class Enemy_spawner : Spawner
     
     void SpawnBat()
     {
-        Vector3 pos = new Vector3(Random.Range(-14, 15), transform.position.y - Random.Range(40, 55), 0);
+        Vector3 pos = new Vector3(Random.Range(-13, 13), transform.position.y - Random.Range(40, 55), 0);
 
         GameObject bat = Instantiate(batPrefab, pos, Quaternion.identity);
         
@@ -37,7 +37,7 @@ public class Enemy_spawner : Spawner
     }
     void SpawnProjectile()
     {
-        Vector3 pos = new Vector3(Random.Range(-14, 15), transform.position.y - Random.Range(40, 55), 0);
+        Vector3 pos = new Vector3(Random.Range(-13, 13), transform.position.y - Random.Range(40, 55), 0);
 
         GameObject projectile = Instantiate(projectilePrefab, pos, Quaternion.identity);
 
@@ -45,5 +45,8 @@ public class Enemy_spawner : Spawner
         StartCoroutine(EmergencyDestroy(projectile));
     }
 
-
+    private void OnEnable()
+    {
+        curQuantity = 0;
+    }
 }
