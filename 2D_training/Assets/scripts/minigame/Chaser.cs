@@ -62,18 +62,6 @@ public class Chaser : Entities
             hp -= 33;
         }
     }
-    /*IEnumerator Cooldown()
-    {
-        rb.constraints = RigidbodyConstraints2D.FreezePosition;
-        yield return new WaitForSeconds(1);
-        rb.constraints &= ~RigidbodyConstraints2D.FreezePosition;
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-    }*/
-    
-    void Die()
-    {
 
-        gameObject.SetActive(false);
-    }
 }

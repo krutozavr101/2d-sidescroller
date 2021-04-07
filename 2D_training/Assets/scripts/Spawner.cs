@@ -19,7 +19,7 @@ public class Spawner : MonoBehaviour
 
         }
     }
-    protected IEnumerator SpawnRandomObject(int objTypeCnt)
+    protected virtual IEnumerator SpawnRandomObject(int objTypeCnt)
     {
 
 

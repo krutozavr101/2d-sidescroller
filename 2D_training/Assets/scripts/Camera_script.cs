@@ -4,7 +4,8 @@ using UnityEngine;
 public class Camera_script : MonoBehaviour
 {
     Background_generation generator;
-    Rigidbody2D rb;
+    [HideInInspector]
+    public Rigidbody2D rb;
     int speed = 10;
     void Start()
     {

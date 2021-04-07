@@ -6,15 +6,15 @@ public class Gameplay_switcher : MonoBehaviour
 {
 
     GameObject player;
-    Rigidbody2D playerRb;
+    Camera_script camera;
     [SerializeField]
     GameObject minigame, basegame;
 
     void Awake()
     {
+        camera = FindObjectOfType<Camera_script>();
         player = GameObject.Find("player");
-        playerRb = player.GetComponent<Rigidbody2D>();
-        InvokeRepeating("ChangeGamePlay", 20, 20);
+        InvokeRepeating("ChangeGamePlay", 25, 25);
         GetComponent<Camera_script>().enabled = true;
     }
 
@@ -42,11 +42,14 @@ public class Gameplay_switcher : MonoBehaviour
         player.GetComponent<Player_movement>().isInMiniGame = !player.GetComponent<Player_movement>().isInMiniGame ;
         if(player.GetComponent<Player_movement>().isInMiniGame)
         {
+            player.GetComponent<Player_movement>().BecomeNormal();
             minigame.SetActive(true);
             basegame.SetActive(false);
+            camera.rb.velocity = new Vector2(camera.rb.velocity.x, camera.rb.velocity.y * .7f);
         }
         else
         {
+            camera.rb.velocity = new Vector2(camera.rb.velocity.x, camera.rb.velocity.y * 1.3f);
             minigame.SetActive(false);
             basegame.SetActive(true);
         }

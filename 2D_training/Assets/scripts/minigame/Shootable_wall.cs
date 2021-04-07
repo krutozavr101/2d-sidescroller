@@ -17,7 +17,6 @@ public class Shootable_wall : MonoBehaviour
     {
         spawner = FindObjectOfType<Wall_spawner>();
         GetComponent<SpriteRenderer>().color = new Color(0, 0, 0);
-        spawner.prevWallPos = gameObject.transform.position;
 
     }
 

@@ -9,14 +9,15 @@ public class LockRoom_spawner : MonoBehaviour
     [HideInInspector]
     public int quantity;
     Wall_spawner spawner;
+    public Vector3 prevPos;
 
     void Start()
     {
+        spawner = GameObject.Find("minigame").GetComponent<Wall_spawner>();
         keyPrefab = Resources.Load<GameObject>("prefabs/key");
         quantity = Random.Range(1, 4);
-        spawner = GameObject.Find("minigame").GetComponent<Wall_spawner>();
         SpawnLockRoom();
-        GetComponent<SpriteRenderer>().color = new Color(1, 1, 1);
+        GetComponent<SpriteRenderer>().color = new Color(.5f, .5f, .5f);
     }
 
     void Update()
@@ -29,13 +30,15 @@ public class LockRoom_spawner : MonoBehaviour
 
     public void SpawnLockRoom()
     {
+
+
         for (int i = 0;i < quantity; i++)
         {
 
-            GameObject key = Instantiate(keyPrefab, new Vector3(Random.Range(-13, 13), Random.Range(spawner.prevWallPos.y - 3, gameObject.transform.position.y + 3)), Quaternion.identity);
+            GameObject key = Instantiate(keyPrefab, new Vector3(Random.Range(-13, 13), Random.Range(prevPos.y - 10, gameObject.transform.position.y + 3)), Quaternion.identity);
             
         }
-        spawner.prevWallPos = gameObject.transform.position;
+
     }
     private void OnDisable()
     {

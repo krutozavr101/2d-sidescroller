@@ -22,7 +22,7 @@ public class Change_slider : MonoBehaviour
     void FixedUpdate()
     {
         slider.value += Time.deltaTime;
-        if(slider.value >= 20)
+        if(slider.value >= 25)
         {
             slider.value = 0;
             gameObject.transform.Rotate(new Vector3(0, 0, 180));
